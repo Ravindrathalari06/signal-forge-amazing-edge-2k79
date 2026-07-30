@@ -1,0 +1,52 @@
+{
+  "properties": {
+    "industry": {
+      "type": "string"
+    },
+    "inferred_pain_points": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "overview": {
+      "type": "string"
+    },
+    "recent_signals": {
+      "items": {
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "signal": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "signal",
+          "date"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "size": {
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "overview",
+    "industry",
+    "size",
+    "recent_signals",
+    "inferred_pain_points",
+    "sources"
+  ],
+  "type": "object"
+}

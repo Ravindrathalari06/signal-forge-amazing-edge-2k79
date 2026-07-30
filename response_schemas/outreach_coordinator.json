@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "body": {
+      "type": "string"
+    },
+    "hooks": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "subject": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "subject",
+    "body",
+    "hooks"
+  ],
+  "type": "object"
+}

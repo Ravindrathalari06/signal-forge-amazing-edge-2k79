@@ -1,0 +1,30 @@
+{
+  "properties": {
+    "mapped_value_props": {
+      "items": {
+        "properties": {
+          "kb_value_prop": {
+            "type": "string"
+          },
+          "prospect_need": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "prospect_need",
+          "kb_value_prop"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "product_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "mapped_value_props",
+    "product_name"
+  ],
+  "type": "object"
+}

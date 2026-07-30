@@ -1,0 +1,26 @@
+{
+  "properties": {
+    "prospects": {
+      "items": {
+        "properties": {
+          "fit_reason": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "role",
+          "fit_reason"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "prospects"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,112 @@
+{
+  "app_name": "AI SDR Outreach Assistant",
+  "pattern": "Manager-Subagent + Single agent mixed with RAG knowledge base",
+  "knowledge_bases": [
+    {
+      "name": "SDR Company KB",
+      "rag_id": "6a6b64c9543ebef6fcd47df5",
+      "rag_name": "sdr_company_kbc014",
+      "description": "The user's own company document (product, value props, ICP, pricing) used to ground prospect suggestions and outreach writing.",
+      "files_ingested": [],
+      "attached_to": ["Prospect Agent", "Personalisation Agent", "Writer Agent"]
+    }
+  ],
+  "agents": [
+    {
+      "name": "Research Agent",
+      "agent_id": "6a6b64ee1876a81230d903d3",
+      "type": "single",
+      "workflow_node_id": "research",
+      "provider_id": "Perplexity",
+      "model": "perplexity/sonar-pro",
+      "temperature": 0.3,
+      "top_p": 1,
+      "enable_web_search": true,
+      "has_knowledge_base": false,
+      "response_schema": "response_schemas/research_agent.json"
+    },
+    {
+      "name": "Prospect Agent",
+      "agent_id": "6a6b64f90d42b68bdb009669",
+      "type": "single",
+      "workflow_node_id": "prospect",
+      "provider_id": "Anthropic",
+      "model": "anthropic/claude-sonnet-4-6",
+      "temperature": 0.4,
+      "top_p": 1,
+      "has_knowledge_base": true,
+      "rag_id": "6a6b64c9543ebef6fcd47df5",
+      "response_schema": "response_schemas/prospect_agent.json"
+    },
+    {
+      "name": "Outreach Coordinator",
+      "agent_id": "6a6b6507acff266c55016b89",
+      "type": "manager",
+      "workflow_node_id": "coordinator",
+      "provider_id": "Anthropic",
+      "model": "anthropic/claude-sonnet-4-6",
+      "temperature": 0.3,
+      "top_p": 1,
+      "has_knowledge_base": false,
+      "managed_agents": [
+        {
+          "id": "6a6b64d65471bd82686e5d13",
+          "name": "Personalisation Agent"
+        },
+        {
+          "id": "6a6b64e298de53d4cce7ceb1",
+          "name": "Writer Agent"
+        }
+      ],
+      "response_schema": "response_schemas/outreach_coordinator.json"
+    },
+    {
+      "name": "Personalisation Agent",
+      "agent_id": "6a6b64d65471bd82686e5d13",
+      "type": "sub_agent",
+      "managed_by": "Outreach Coordinator",
+      "workflow_node_id": "personalisation",
+      "provider_id": "Anthropic",
+      "model": "anthropic/claude-sonnet-4-6",
+      "temperature": 0.4,
+      "top_p": 1,
+      "has_knowledge_base": true,
+      "rag_id": "6a6b64c9543ebef6fcd47df5",
+      "response_schema": "response_schemas/personalisation_agent.json"
+    },
+    {
+      "name": "Writer Agent",
+      "agent_id": "6a6b64e298de53d4cce7ceb1",
+      "type": "sub_agent",
+      "managed_by": "Outreach Coordinator",
+      "workflow_node_id": "writer",
+      "provider_id": "Anthropic",
+      "model": "anthropic/claude-sonnet-4-6",
+      "temperature": 0.6,
+      "top_p": 1,
+      "has_knowledge_base": true,
+      "rag_id": "6a6b64c9543ebef6fcd47df5",
+      "response_schema": "response_schemas/writer_agent.json"
+    }
+  ],
+  "workflow": {
+    "nodes": [
+      {"id": "input", "label": "User Query", "nodeCategory": "input", "type": "Input"},
+      {"id": "research", "label": "Research Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6a6b64ee1876a81230d903d3"},
+      {"id": "prospect", "label": "Prospect Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6a6b64f90d42b68bdb009669"},
+      {"id": "coordinator", "label": "Outreach Coordinator", "nodeCategory": "agent", "type": "Agent", "agent_id": "6a6b6507acff266c55016b89"},
+      {"id": "personalisation", "label": "Personalisation Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6a6b64d65471bd82686e5d13"},
+      {"id": "writer", "label": "Writer Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6a6b64e298de53d4cce7ceb1"},
+      {"id": "output", "label": "Outreach Draft", "nodeCategory": "end", "type": "Output"}
+    ],
+    "edges": [
+      {"source": "input", "target": "research"},
+      {"source": "research", "target": "prospect"},
+      {"source": "prospect", "target": "coordinator"},
+      {"source": "coordinator", "target": "personalisation"},
+      {"source": "coordinator", "target": "writer"},
+      {"source": "personalisation", "target": "output"},
+      {"source": "writer", "target": "output"}
+    ]
+  }
+}
