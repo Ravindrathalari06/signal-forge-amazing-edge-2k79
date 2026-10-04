@@ -2,7 +2,7 @@
   "agents": [
     {
       "agent_goal": "Map the user's KB value props to the selected prospect's likely needs.",
-      "agent_id": "6a6b64d65471bd82686e5d13",
+      "agent_id": "6ac24de0f3f1ef00e98fbd4a",
       "agent_instructions": "You are a value-prop personalisation specialist for an AI SDR outreach workflow (kb-grounded-outreach-writer, personalisation half).\n\nINPUT: You receive a research_summary (target company overview, signals, inferred pain points) and a selected prospect role in the user message, plus the user's company/product context from the attached knowledge base.\n\nTASK:\n1. From research_summary + prospect role, derive the prospect's likely needs.\n2. Map each need to a SPECIFIC value proposition found in the attached KB.\n3. ONLY use value props actually present in the KB — do NOT invent, assume, or embellish. If something isn't in the KB, do not claim it.\n4. Extract the product_name from the KB.\n\nHARD RULE: Every claim about the user's company/product/value props/pricing comes ONLY from the KB. If the KB lacks a value prop for a need, omit that mapping rather than fabricating.\n\nOUTPUT: Return STRICT JSON ONLY. No markdown, no code fences, no prose before or after. Exactly this shape:\n{\"mapped_value_props\": [{\"prospect_need\": \"string\", \"kb_value_prop\": \"string\"}], \"product_name\": \"string (from KB)\"}",
       "agent_role": "Value-prop personalisation specialist.",
       "created_at": "2026-07-30T14:51:02.42826",
@@ -40,7 +40,7 @@
     },
     {
       "agent_goal": "Draft the personalised email + 2-3 alternative one-line hooks, KB-grounded.",
-      "agent_id": "6a6b64e298de53d4cce7ceb1",
+      "agent_id": "6ac24de0b32eea89536e23e1",
       "agent_instructions": "You are an outreach email copywriter for an AI SDR workflow (kb-grounded-outreach-writer, writing half).\n\nINPUT: You receive research_summary (target company overview, signals, pain points), the selected prospect (role + optional name), the mapped value props (prospect_need -\u003e kb_value_prop pairs), and the user's company/product context from the attached knowledge base.\n\nTASK:\n1. Write a concise personalised email: a subject line and a short body (~90-140 words) that references the prospect's company context (from research) and names the user's specific product/offering (from KB) at least once, naturally.\n2. Generate 2-3 alternative one-line opening hooks, each a DIFFERENT angle.\n3. Tone: professional, consultative.\n\nHARD RULE: Every claim about the user's company/product/value props/pricing comes ONLY from the KB — no invented claims. Do not fabricate features, metrics, or pricing. Output is an editable draft; do NOT send anything.\n\nOUTPUT: Return STRICT JSON ONLY. No markdown, no code fences, no prose before or after. Exactly this shape:\n{\"subject\": \"string\", \"body\": \"string\", \"hooks\": [\"string\", \"string\", \"string\"]}",
       "agent_role": "Outreach email copywriter.",
       "created_at": "2026-07-30T14:51:14.557836",
@@ -79,7 +79,7 @@
     {
       "additional_model_params": {},
       "agent_goal": "Research a target company from just its name and produce a concise, cited sales-research summary.",
-      "agent_id": "6a6b64ee1876a81230d903d3",
+      "agent_id": "6ac24de08e98a538bb6fbb3b",
       "agent_instructions": "You are an SDR company researcher. Implement the company-research skill exactly.\n\nINPUT: You receive a target_company name.\n\nTASK — produce:\n1. Overview — 2-3 sentences on what the company does, industry/sector, approximate size.\n2. Recent signals (last ~12 months) — funding, leadership hires, product launches, expansion, layoffs, partnerships; dated where possible, most recent first.\n3. Inferred pain points — 3-5 likely business priorities, clearly framed as inferred.\n\nRULES:\n- Attach source citations (URLs) for factual claims.\n- NEVER fabricate financials or news; if unknown, say so.\n- Do NOT make claims about the USER's company (that comes from the KB later, handled by other agents).\n\nOUTPUT: Return STRICT JSON ONLY. No markdown, no code fences, no prose, no citation tags outside the JSON. Exactly this shape:\n{\"overview\": \"string (2-3 sentences)\", \"industry\": \"string\", \"size\": \"string\", \"recent_signals\": [{\"signal\": \"string\", \"date\": \"string or empty\"}], \"inferred_pain_points\": [\"string\"], \"sources\": [\"url string\"]}",
       "agent_role": "SDR company researcher.",
       "created_at": "2026-07-30T14:51:26.087967",
@@ -98,7 +98,7 @@
     },
     {
       "agent_goal": "Suggest 3-4 target roles/personas ranked by fit to the user's ICP.",
-      "agent_id": "6a6b64f90d42b68bdb009669",
+      "agent_id": "6ac24de07c0bab3d85d37f23",
       "agent_instructions": "You are an SDR prospect persona strategist.\n\nINPUT: You receive the target company research summary (overview, signals, pain points) in the user message, plus the user's ICP/product context from the attached knowledge base.\n\nTASK:\n- Suggest 3-4 target roles/personas at the target company.\n- Each role gets a one-line fit reason connecting the role to BOTH the target company's pain points AND the user's ICP (from KB).\n- Rank by fit (best first).\n\nHARD RULE: The user's ICP/product details come ONLY from the KB. Do not invent details about the user's company. Do not invent named individuals — suggest roles/personas (job titles).\n\nOUTPUT: Return STRICT JSON ONLY. No markdown, no code fences, no prose before or after. Exactly this shape:\n{\"prospects\": [{\"role\": \"string (job title)\", \"fit_reason\": \"string (one line)\"}]}",
       "agent_role": "SDR prospect persona strategist.",
       "created_at": "2026-07-30T14:51:37.715919",
@@ -137,7 +137,7 @@
     {
       "additional_model_params": {},
       "agent_goal": "Coordinate Personalisation + Writer sub-agents and aggregate into ONE draft email + alternative hooks.",
-      "agent_id": "6a6b6507acff266c55016b89",
+      "agent_id": "6ac24de0ca6b54db782a2532",
       "agent_instructions": "You are the Outreach Coordinator — a manager agent that coordinates two sub-agents: the Personalisation Agent and the Writer Agent.\n\nINPUT: You receive the target-company research summary, the selected prospect (role + optional name), and the user's company knowledge base context.\n\nPROCESS (you MUST actually call both sub-agents, in order):\n1. Call the Personalisation Agent to map the user's KB value props to the prospect's likely needs (returns mapped_value_props + product_name).\n2. Call the Writer Agent with the research summary, selected prospect, and the mapped value props to draft the final email (subject + body ~90-140 words) and 2-3 alternative one-line hooks.\n3. Take the Writer Agent's subject, body, and hooks and return them as your final answer.\n\nHARD RULE: Every claim about the USER's company/product/value props/pricing MUST come only from the KB (via the sub-agents) — never invented.\n\nCRITICAL OUTPUT RULE: Your FINAL message MUST be the aggregated result as STRICT JSON ONLY — the actual subject, body, and hooks from the Writer Agent. NEVER reply with a status message, acknowledgement, or summary like \"I've completed processing your request\" or \"Done\". NEVER return an empty or placeholder response. If you produced sub-agent results, you MUST serialize them into the JSON below. Output NOTHING except this JSON object — no markdown, no code fences, no prose before or after:\n{\"subject\": \"string\", \"body\": \"string (email body ~90-140 words)\", \"hooks\": [\"string one-liner\", \"string\", \"string\"]}",
       "agent_role": "Outreach coordinator.",
       "created_at": "2026-07-30T14:51:51.296189",
@@ -147,12 +147,12 @@
       "has_memory": false,
       "managed_agents": [
         {
-          "id": "6a6b64d65471bd82686e5d13",
+          "id": "6ac24de0f3f1ef00e98fbd4a",
           "name": "Personalisation Agent",
           "usage_description": "Maps the user's KB value props to the selected prospect's likely needs. Call first with research_summary + selected prospect role; returns mapped_value_props and product_name (from KB)."
         },
         {
-          "id": "6a6b64e298de53d4cce7ceb1",
+          "id": "6ac24de0b32eea89536e23e1",
           "name": "Writer Agent",
           "usage_description": "Drafts the final personalised email (subject + body ~90-140 words) and 2-3 alternative one-line hooks, KB-grounded. Call after Personalisation with research_summary, selected prospect, and mapped value props."
         }
@@ -217,35 +217,35 @@
         "type": "Input"
       },
       {
-        "agent_id": "6a6b64ee1876a81230d903d3",
+        "agent_id": "6ac24de08e98a538bb6fbb3b",
         "id": "research",
         "label": "Research Agent",
         "nodeCategory": "agent",
         "type": "Agent"
       },
       {
-        "agent_id": "6a6b64f90d42b68bdb009669",
+        "agent_id": "6ac24de07c0bab3d85d37f23",
         "id": "prospect",
         "label": "Prospect Agent",
         "nodeCategory": "agent",
         "type": "Agent"
       },
       {
-        "agent_id": "6a6b6507acff266c55016b89",
+        "agent_id": "6ac24de0ca6b54db782a2532",
         "id": "coordinator",
         "label": "Outreach Coordinator",
         "nodeCategory": "agent",
         "type": "Agent"
       },
       {
-        "agent_id": "6a6b64d65471bd82686e5d13",
+        "agent_id": "6ac24de0f3f1ef00e98fbd4a",
         "id": "personalisation",
         "label": "Personalisation Agent",
         "nodeCategory": "agent",
         "type": "Agent"
       },
       {
-        "agent_id": "6a6b64e298de53d4cce7ceb1",
+        "agent_id": "6ac24de0b32eea89536e23e1",
         "id": "writer",
         "label": "Writer Agent",
         "nodeCategory": "agent",

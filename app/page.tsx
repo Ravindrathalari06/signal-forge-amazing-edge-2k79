@@ -26,9 +26,9 @@ import SessionsView, {
 } from './sections/SessionsView'
 
 // ---- Agent + KB config ----
-const RESEARCH_AGENT_ID = '6a6b64ee1876a81230d903d3'
-const PROSPECT_AGENT_ID = '6a6b64f90d42b68bdb009669'
-const COORDINATOR_AGENT_ID = '6a6b6507acff266c55016b89'
+const RESEARCH_AGENT_ID = '6ac24de08e98a538bb6fbb3b'
+const PROSPECT_AGENT_ID = '6ac24de07c0bab3d85d37f23'
+const COORDINATOR_AGENT_ID = '6ac24de0ca6b54db782a2532'
 const RAG_ID = '6a6b64c9543ebef6fcd47df5'
 const KB_COMPANY_NAME = 'sdr_company_kbc014'
 

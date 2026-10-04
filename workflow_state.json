@@ -14,7 +14,7 @@
   "agents": [
     {
       "name": "Research Agent",
-      "agent_id": "6a6b64ee1876a81230d903d3",
+      "agent_id": "6ac24de08e98a538bb6fbb3b",
       "type": "single",
       "workflow_node_id": "research",
       "provider_id": "Perplexity",
@@ -27,7 +27,7 @@
     },
     {
       "name": "Prospect Agent",
-      "agent_id": "6a6b64f90d42b68bdb009669",
+      "agent_id": "6ac24de07c0bab3d85d37f23",
       "type": "single",
       "workflow_node_id": "prospect",
       "provider_id": "Anthropic",
@@ -40,7 +40,7 @@
     },
     {
       "name": "Outreach Coordinator",
-      "agent_id": "6a6b6507acff266c55016b89",
+      "agent_id": "6ac24de0ca6b54db782a2532",
       "type": "manager",
       "workflow_node_id": "coordinator",
       "provider_id": "Anthropic",
@@ -50,11 +50,11 @@
       "has_knowledge_base": false,
       "managed_agents": [
         {
-          "id": "6a6b64d65471bd82686e5d13",
+          "id": "6ac24de0f3f1ef00e98fbd4a",
           "name": "Personalisation Agent"
         },
         {
-          "id": "6a6b64e298de53d4cce7ceb1",
+          "id": "6ac24de0b32eea89536e23e1",
           "name": "Writer Agent"
         }
       ],
@@ -62,7 +62,7 @@
     },
     {
       "name": "Personalisation Agent",
-      "agent_id": "6a6b64d65471bd82686e5d13",
+      "agent_id": "6ac24de0f3f1ef00e98fbd4a",
       "type": "sub_agent",
       "managed_by": "Outreach Coordinator",
       "workflow_node_id": "personalisation",
@@ -76,7 +76,7 @@
     },
     {
       "name": "Writer Agent",
-      "agent_id": "6a6b64e298de53d4cce7ceb1",
+      "agent_id": "6ac24de0b32eea89536e23e1",
       "type": "sub_agent",
       "managed_by": "Outreach Coordinator",
       "workflow_node_id": "writer",
@@ -92,11 +92,11 @@
   "workflow": {
     "nodes": [
       {"id": "input", "label": "User Query", "nodeCategory": "input", "type": "Input"},
-      {"id": "research", "label": "Research Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6a6b64ee1876a81230d903d3"},
-      {"id": "prospect", "label": "Prospect Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6a6b64f90d42b68bdb009669"},
-      {"id": "coordinator", "label": "Outreach Coordinator", "nodeCategory": "agent", "type": "Agent", "agent_id": "6a6b6507acff266c55016b89"},
-      {"id": "personalisation", "label": "Personalisation Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6a6b64d65471bd82686e5d13"},
-      {"id": "writer", "label": "Writer Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6a6b64e298de53d4cce7ceb1"},
+      {"id": "research", "label": "Research Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6ac24de08e98a538bb6fbb3b"},
+      {"id": "prospect", "label": "Prospect Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6ac24de07c0bab3d85d37f23"},
+      {"id": "coordinator", "label": "Outreach Coordinator", "nodeCategory": "agent", "type": "Agent", "agent_id": "6ac24de0ca6b54db782a2532"},
+      {"id": "personalisation", "label": "Personalisation Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6ac24de0f3f1ef00e98fbd4a"},
+      {"id": "writer", "label": "Writer Agent", "nodeCategory": "agent", "type": "Agent", "agent_id": "6ac24de0b32eea89536e23e1"},
       {"id": "output", "label": "Outreach Draft", "nodeCategory": "end", "type": "Output"}
     ],
     "edges": [
